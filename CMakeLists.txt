@@ -28,16 +28,20 @@ else()
     message(FATAL_ERROR "")
 endif()
 
-
+set(_MAIN_PROJECT OFF)
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    set(_MAIN_PROJECT ON)
 
     # Optionally set things like CMAKE_CXX_STANDARD, CMAKE_POSITION_INDEPENDENT_CODE here
 
     # Let's ensure -std=c++xx instead of -std=g++xx
     set(CMAKE_CXX_EXTENSIONS OFF)
 
-    # Let's nicely support folders in IDEs
+    # C++ Standard
+    set(CMAKE_CXX_STANDARD 17)
+
+    # Support folders in IDEs
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
     # Testing only available if this is the main app
@@ -55,6 +59,12 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     endif()
 endif()
 
+set(VIEW_BLASTER_BUILD_EXAMPLES ${_MAIN_PROJECT} CACHE BOOL "Build example applications")
+
+######################################################################
+#                            Dependencies                            #
+######################################################################
+
 # FetchContent added in CMake 3.11, downloads during the configure step
 include(FetchContent)
 # FetchContent_MakeAvailable was not added until CMake 3.14; use our shim
@@ -64,19 +74,25 @@ endif()
 
 find_package(Boost 1.70 REQUIRED)
 
+include(cmake/LoadSDL2.cmake)
+
 # Formatting library
 FetchContent_Declare(
     fmtlib
     GIT_REPOSITORY https://github.com/fmtlib/fmt.git
     GIT_TAG 7.0.3)
 FetchContent_MakeAvailable(fmtlib)
-# Adds fmt::fmt
+
+######################################################################
+#                              Targets                               #
+######################################################################
+
 add_subdirectory(include)
-# The compiled library code is here
 add_subdirectory(src)
 
-# The executable code is here
-add_subdirectory(examples)
+if(VIEW_BLASTER_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
 
 # Testing only available if this is the main app
 # Emergency override VIEW_BLASTER_BUILD_TESTING provided as well
