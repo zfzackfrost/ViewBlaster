@@ -1,4 +1,5 @@
 set(SRC_LIST "")
+list(APPEND SRC_LIST "VulkanApp.cpp")
 list(APPEND SRC_LIST "VulkanBuffer.cpp")
 
 find_package(Vulkan REQUIRED)

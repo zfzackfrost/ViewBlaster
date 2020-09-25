@@ -2,14 +2,21 @@
 
 using namespace viewblaster;
 
+class SimpleApp : public App
+{
+public:
+    utils::Result<utils::Void> Initialize() override
+    {
+        auto R = App::Initialize();
+        if (R.HasMessage())
+            return R;
+        SetAppTitle("Simple App");
+        return {utils::Void{}};
+    }
+};
+
 int main(int argc, char* argv[])
 {
-    auto* Buf    = new Buffer(64);
-    auto FillRes = Buf->Fill(nullptr, 128);
-    if (FillRes.HasMessage())
-    {
-        utils::PrintMessage(FillRes.Message());
-    }
-    delete Buf;
+    SimpleApp{}.Run();
     return 0;
 }

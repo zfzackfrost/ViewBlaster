@@ -13,5 +13,6 @@
 #include <viewblaster/common/render/Buffer.hpp>
 
 #ifdef GFX_API_VK
+    #include <viewblaster/backends/vulkan/VulkanApp.hpp>
     #include <viewblaster/backends/vulkan/VulkanBuffer.hpp>
 #endif
