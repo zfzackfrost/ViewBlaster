@@ -1,0 +1,13 @@
+/**
+ * @file config.hpp.in
+ * @author Zachary Frost
+ * @copyright See repository LICENSE file
+ * @brief Configuration header file
+ */
+
+///////////////////////////////////////////////////////////////////////
+//                           Graphics API                            //
+///////////////////////////////////////////////////////////////////////
+
+#cmakedefine GFX_API_VK
+#cmakedefine VIEW_BLASTER_COLORED_OUTPUT
