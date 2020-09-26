@@ -16,7 +16,7 @@ add_library(ViewBlaster ${SRC_LIST} ${HEADER_LIST})
 
 target_include_directories(ViewBlaster PUBLIC ${ViewBlaster_SOURCE_DIR}/include)
 target_link_libraries(ViewBlaster PRIVATE Boost::boost)
-target_link_libraries(ViewBlaster PUBLIC ViewBlasterConfig fmt::fmt)
+target_link_libraries(ViewBlaster PUBLIC ViewBlasterConfig fmt::fmt glm::glm)
 target_link_libraries(ViewBlaster PUBLIC SDL2-static SDL2main)
 
 # ================ Graphics API ================ #

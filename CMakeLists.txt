@@ -75,6 +75,7 @@ endif()
 find_package(Boost 1.70 REQUIRED)
 
 include(cmake/LoadSDL2.cmake)
+include(cmake/LoadGLM.cmake)
 
 # Formatting library
 FetchContent_Declare(
