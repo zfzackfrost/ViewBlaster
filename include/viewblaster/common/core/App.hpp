@@ -24,7 +24,8 @@ namespace viewblaster {
 
     protected:
 
-        virtual utils::Result<utils::Void> Initialize() = 0;
+        virtual utils::Result<utils::Void> EarlyInitialize() = 0;
+        virtual utils::Result<utils::Void> LateInitialize() = 0;
         virtual utils::Result<utils::Void> SetupSDL() = 0;
         virtual utils::Result<utils::Void> SetupGfxAPI() = 0;
 

@@ -9,13 +9,16 @@
 
 #include <viewblaster/common/core/App.hpp>
 
+#include <viewblaster/backends/vulkan/vk.hpp>
+
 #include <SDL2/SDL.h>
 
 namespace viewblaster {
     class VulkanApp : public AbstractApp
     {
     protected:
-        utils::Result<utils::Void> Initialize() override;
+        utils::Result<utils::Void> EarlyInitialize() override;
+        utils::Result<utils::Void> LateInitialize() override;
         utils::Result<utils::Void> SetupSDL() final;
         utils::Result<utils::Void> SetupGfxAPI() final;
 
@@ -25,8 +28,8 @@ namespace viewblaster {
         utils::Result<utils::Void> RenderFrame() override;
 
         utils::Result<utils::Void> CleanUp() override;
-    private:
-        std::string mTitle;
+    protected:
+        vk::Instance InstanceVk;
     };
 
     using App = VulkanApp;

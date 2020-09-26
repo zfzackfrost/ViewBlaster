@@ -3,9 +3,10 @@
 namespace viewblaster {
     void AbstractApp::Run()
     {
+        EarlyInitialize();
         SetupSDL();
         SetupGfxAPI();
-        Initialize();
+        LateInitialize();
         MainLoop();
         CleanUp();
     }

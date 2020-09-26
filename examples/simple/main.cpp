@@ -5,9 +5,9 @@ using namespace viewblaster;
 class SimpleApp : public App
 {
 public:
-    utils::Result<utils::Void> Initialize() override
+    utils::Result<utils::Void> EarlyInitialize() override
     {
-        auto R = App::Initialize();
+        auto R = App::EarlyInitialize();
         if (R.HasMessage())
             return R;
         SetAppTitle("Simple App");
