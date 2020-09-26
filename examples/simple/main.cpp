@@ -10,7 +10,7 @@ public:
         auto R = App::EarlyInitialize();
         if (R.HasMessage())
             return R;
-        SetAppTitle("Simple App");
+        utils::AssertResult(SetAppTitle("Simple App"));
         return {utils::Void{}};
     }
 };

@@ -1,20 +1,19 @@
 #include <viewblaster/common/core/App.hpp>
 
 namespace viewblaster {
+    using namespace utils;
     void AbstractApp::Run()
     {
-        EarlyInitialize();
-        SetupSDL();
-        SetupGfxAPI();
-        LateInitialize();
+        AssertResult(EarlyInitialize());
+        AssertResult(SetupSDL());
+        AssertResult(SetupGfxAPI());
+        AssertResult(LateInitialize());
         MainLoop();
-        CleanUp();
+        AssertResult(CleanUp());
+        AssertResult(CleanUpGfxAPI());
     }
 
-    void AbstractApp::Quit()
-    {
-        bShouldQuit = true;
-    }
+    void AbstractApp::Quit() { bShouldQuit = true; }
 
     void AbstractApp::MainLoop()
     {
@@ -25,7 +24,7 @@ namespace viewblaster {
             // Process Events
             {
                 SDL_Event evt;
-                while(SDL_PollEvent(&evt))
+                while (SDL_PollEvent(&evt))
                 {
                     if (evt.type == SDL_QUIT)
                     {
@@ -34,24 +33,33 @@ namespace viewblaster {
                 }
             }
 
-            RenderScene();
-            RenderFrame();
+            {
+                auto R = RenderScene();
+                AssertResult(R);
+            }
+            {
+                auto R = RenderFrame();
+                AssertResult(R);
+            }
 
             {
-                auto Now = std::chrono::steady_clock::now();
+                auto Now       = std::chrono::steady_clock::now();
                 auto DeltaTime = Now - LastUpdateTime;
-                Update(DeltaTime);
+                {
+                    auto R = Update(DeltaTime);
+                    AssertResult(R);
+                }
+
                 LastUpdateTime = Now;
             }
         }
     }
-
 
     utils::Result<utils::Void> AbstractApp::SetAppTitle(const std::string& NewTitle)
     {
         Title = NewTitle;
         if (Window)
             SDL_SetWindowTitle(Window, Title.c_str());
-        return {utils::Void{}};
+        return {utils::Void {}};
     }
 } // namespace viewblaster

@@ -28,8 +28,21 @@ namespace viewblaster {
         utils::Result<utils::Void> RenderFrame() override;
 
         utils::Result<utils::Void> CleanUp() override;
-    protected:
-        vk::Instance InstanceVk;
+        utils::Result<utils::Void> CleanUpGfxAPI() override;
+
+        void MainLoop() override;
+
+        struct
+        {
+            vk::Instance Instance;
+            vk::PhysicalDevice PhysicalDevice;
+        } StateVk;
+
+    private:
+        utils::Result<utils::Void> CreateInstanceVk();
+        utils::Result<utils::Void> PickPhysicalDeviceVk();
+        utils::Result<bool> IsDeviceSuitableVk(vk::PhysicalDevice Device);
+
     };
 
     using App = VulkanApp;

@@ -35,11 +35,11 @@ namespace viewblaster {
         virtual utils::Result<utils::Void> RenderFrame() = 0;
 
         virtual utils::Result<utils::Void> CleanUp() = 0;
+        virtual utils::Result<utils::Void> CleanUpGfxAPI() = 0;
 
         virtual utils::Result<utils::Void> SetAppTitle(const std::string& NewTitle);
 
-    protected:
-        void MainLoop();
+        virtual void MainLoop();
 
         bool bShouldQuit = false;
         SDL_Window* Window;
